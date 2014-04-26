@@ -11,6 +11,7 @@ from webassets.bundle import has_placeholder
 from webassets.env import Environment, Resolver
 from webassets.exceptions import BundleError
 from webassets.loaders import YAMLLoader
+import yaml
 from zope.interface import Interface
 
 
@@ -153,7 +154,7 @@ def get_webassets_env_from_settings(settings, prefix='webassets'):
                 if val.lower() in auto_booly:
                     val = asbool(val)
                 elif val.lower().startswith('json:') and k[cut_prefix:] != 'manifest':
-                    val = json.loads(val[5:])
+                    val = yaml.safe_load(val[5:])
             kwargs[k[cut_prefix:]] = val
 
     if 'base_dir' not in kwargs:
